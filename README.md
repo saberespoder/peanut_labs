@@ -1,5 +1,6 @@
 
 [![Build Status](https://travis-ci.org/saberespoder/peanut_labs.svg?branch=master)](https://travis-ci.org/saberespoder/peanut_labs)
+[![Gem Version](https://badge.fury.io/rb/peanut_labs.svg)](https://badge.fury.io/rb/peanut_labs)
 
 # PeanutLabs
 This is a helper library for PeanutLabs.com integration.

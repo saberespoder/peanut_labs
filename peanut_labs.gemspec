@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["tech@saberespoder.com"]
 
   spec.summary       = "Gem for integration with peanutlabs.com"
-  spec.description   = "Provides simple wrappers for functionality: Whitelist for routes, DirectLink building and Iframe url generation"
+  spec.description   = "Simply library for integration with peanutlabs.com webiste"
   spec.homepage      = "http://www.github.com/saberespoder/peanut_labs"
   spec.license       = "MIT"
 
