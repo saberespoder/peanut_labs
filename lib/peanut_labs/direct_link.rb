@@ -4,14 +4,14 @@ module PeanutLabs
   class DirectLink
     ENDPOINT = "https://dlink.peanutlabs.com/direct_link".freeze
 
-    def initialize(params={})
-      @credentials = params[:credentials] || Credentials.new(params)
-    end
+    # Parameters:
+    # user_id - the user’s id within system
+    # sub_id - A secure session id. Will be returned during postback notification.
 
-    def call(user_id, sub_id=nil)
+    def self.call(user_id, sub_id=nil)
       raise UserIdMissingError if user_id.nil? || user_id.empty?
 
-      result = "#{ENDPOINT}/?pub_id=#{credentials.id}&user_id=#{Builder::UserId.new(credentials: credentials).call(user_id)}"
+      result = "#{ENDPOINT}/?pub_id=#{Credentials.id}&user_id=#{Builder::UserId.new(user_id).call}"
 
       if sub_id
         result << "&sub_id=#{sub_id}"
@@ -19,9 +19,5 @@ module PeanutLabs
 
       result
     end
-
-    private
-
-    attr_accessor :credentials
   end
 end

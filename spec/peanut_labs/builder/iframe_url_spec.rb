@@ -7,7 +7,12 @@ describe PeanutLabs::Builder::IframeUrl do
   APP_KEY = 'd755913ed731c335656a9578be648aa0'
   END_POINT = 'https://www.peanutlabs.com/userGreeting.php'
 
-  subject { PeanutLabs::Builder::IframeUrl.new(app_id: LABS_ID, app_key: APP_KEY) }
+  before do
+    PeanutLabs::Credentials.id = LABS_ID
+    PeanutLabs::Credentials.key = APP_KEY
+  end
+
+  subject { PeanutLabs::Builder::IframeUrl }
 
   it 'return url only with USER_ID inside' do
     expect(subject.call(id: USER_ID)).to eql("#{END_POINT}?userId=#{USER_ID}-#{LABS_ID}-aa3ad22725")

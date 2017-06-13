@@ -5,8 +5,12 @@ describe PeanutLabs::DirectLink do
   let(:user_id) { 'user123123' }
   let(:user_go_id) { '41597ceacf' }
 
-  subject { PeanutLabs::DirectLink.new(app_id: app_id, app_key: '123123123123123123') }
+  before do
+    PeanutLabs::Credentials.id = '1000'
+    PeanutLabs::Credentials.key = '123123123123123123'
+  end
 
+  subject { PeanutLabs::DirectLink }
 
   it 'should add sub_id to link' do
     expect(
@@ -23,5 +27,12 @@ describe PeanutLabs::DirectLink do
   context 'if user_id is missing throws error' do
     it { expect { subject.call(nil) }.to raise_error(PeanutLabs::UserIdMissingError) }
     it { expect { subject.call("") }.to raise_error(PeanutLabs::UserIdMissingError) }
+  end
+
+  it 'should fail with missing Credential' do
+    PeanutLabs::Credentials.id = nil
+    PeanutLabs::Credentials.key = nil
+
+    expect { subject.call(user_id) }.to raise_error PeanutLabs::CredentialsMissingError
   end
 end

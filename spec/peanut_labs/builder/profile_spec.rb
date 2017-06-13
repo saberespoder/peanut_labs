@@ -7,9 +7,14 @@ describe PeanutLabs::Builder::Profile do
   let!(:app_id) { '0000' }
   let!(:app_key) { 'd755913ed731c335656a9578be648aa0' }
 
+  before do
+    PeanutLabs::Credentials.id = '0000'
+    PeanutLabs::Credentials.key = 'd755913ed731c335656a9578be648aa0'
+  end
+
   DEFAULT_PARAMS = { user_id: USER_ID, dob: '2015-06-19', sex: '1', country: 'EE' }
 
-  subject { PeanutLabs::Builder::Profile.new(app_id: app_id, app_key: app_key) }
+  subject { PeanutLabs::Builder::Profile.new }
 
   it 'should return user_id' do
     expect(JSON.parse(subject.call(DEFAULT_PARAMS))['user_id']).to eql "#{USER_ID}-#{app_id}-aa3ad22725"

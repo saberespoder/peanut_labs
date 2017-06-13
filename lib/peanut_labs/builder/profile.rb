@@ -15,10 +15,6 @@ module PeanutLabs
         TK TO TT TN TR TM TC TV UG UA AE GB US UM UY UZ VU VE VN VI WF EH YE ZM ZW
       ).freeze
 
-      def initialize(params = nil)
-        @credentials = params[:credentials] || PeanutLabs::Credentials.new(params)
-      end
-
       # This class build a user profile and validates following parameters:
       #
       # - params[:user_id] - mandatory, will be later built to user_go_id
@@ -38,7 +34,7 @@ module PeanutLabs
         raise PeanutLabs::CountryMissingError if params[:country].nil?
 
         {
-          user_id: UserId.new(credentials: credentials).call(params[:user_id]),
+          user_id: UserId.new(params[:user_id]).call,
           cc: country(params[:country]),
           dob: date_of_birth(params[:dob]),
           sex: sex(params[:sex])
@@ -46,8 +42,6 @@ module PeanutLabs
       end
 
       private
-
-      attr_reader :credentials
 
       def country(value)
         if COUNTRY_CODES.include? value

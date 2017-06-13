@@ -10,7 +10,7 @@ Currently features include:
 - Building DirectLinks
 - Whitelisting routes in rails
 
-Documentation is here: http://peanut-labs.github.io/publisher-doc/index.html#iframe-getuserid
+Documentation is here: http://peanut-labs.github.io/publisher-doc/index.html
 
 ## Installation
 
@@ -29,7 +29,33 @@ Or install it yourself as:
     $ gem install peanut_labs
 
 ## Usage
-Follow the code, Luke (c) 
+You need to provide you app_id and and app_key. 
+Perfect place to do that in rails app is config/initialize/peanutlabs.rb file
+
+```
+PeanutLabs::Credentials.id = <YOUR APP ID>
+PeanutLabs::Credentials.key = <YOUR KEY>
+```
+
+### Whitelist
+
+You would need callback in your app to receive response from peanutlabs.
+To do that securely, you need to whitelist your route in rails routes.rb file, like this:
+
+```
+require 'peanut_labs/whitelist'
+post "callback/peanutlabs" => "callback#peanutlabs", constraints: PeanutLabs::Whitelist
+```
+
+Whitelist was taken from official documentation:
+http://peanut-labs.github.io/publisher-doc/index.html#ipwhitelist
+
+### Iframe
+TODO: Explain here how to build an iframe link
+
+### Direct Links
+TODO: Explain how to build direct links
+
 
 ## Development
 
