@@ -1,4 +1,5 @@
 require_relative '../credentials'
+require_relative '../errors'
 require 'digest'
 
 module PeanutLabs
@@ -7,9 +8,9 @@ module PeanutLabs
       # public_user_id = the user’s id within system
       # highly recommended not to expose descending id's in here
 
-      def initialize(public_used_id)
-        # TODO: check that public_user_id is alphanumeric or throw error
-        @public_user_id = public_used_id
+      def initialize(public_user_id)
+        raise PeanutLabs::UserIdAlphanumericError if public_user_id.match(/\A\p{Alnum}+\z/).nil?
+        @public_user_id = public_user_id
       end
 
       # Documentation is here: http://peanut-labs.github.io/publisher-doc/index.html#iframe-getuserid
