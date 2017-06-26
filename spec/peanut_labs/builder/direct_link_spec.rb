@@ -2,12 +2,12 @@ require 'spec_helper'
 
 describe PeanutLabs::Builder::DirectLink do
   let(:pub_id)  { '0000' }
+  let(:app_key) { 'd755913ed731c335656a9578be648aa0' }
   let(:user_id) { 'user1' }
-  let(:user_go) { PeanutLabs::Builder::UserId.new(user_id).call.split('-')[2] }
 
   before do
     PeanutLabs::Credentials.id  = pub_id
-    PeanutLabs::Credentials.key = 'd755913ed731c335656a9578be648aa0'
+    PeanutLabs::Credentials.key = app_key
   end
 
   subject { PeanutLabs::Builder::DirectLink }
@@ -15,13 +15,13 @@ describe PeanutLabs::Builder::DirectLink do
   it 'should return a link' do
     expect(
       subject.call(user_id)
-    ).to eql "https://dlink.peanutlabs.com/direct_link/?pub_id=0000&user_id=user1-0000-#{user_go}"
+    ).to eql "https://dlink.peanutlabs.com/direct_link/?pub_id=0000&user_id=user1-0000-aa3ad22725"
   end
 
   it 'should add sub_id to link' do
     expect(
       subject.call(user_id, 'random_sub_id')
-    ).to eql "https://dlink.peanutlabs.com/direct_link/?pub_id=0000&user_id=user1-0000-#{user_go}&sub_id=random_sub_id"
+    ).to eql "https://dlink.peanutlabs.com/direct_link/?pub_id=0000&user_id=user1-0000-aa3ad22725&sub_id=random_sub_id"
   end
 
   context 'if user_id is missing throws error' do
