@@ -3,9 +3,9 @@ require 'spec_helper'
 
 describe PeanutLabs::Builder::UserId do
   # Following documentation lead: http://peanut-labs.github.io/publisher-doc/#iframe-getuserid
-  let(:user_id) { 'user1' }
   let(:labs_id) { '0000' }
   let(:app_key) { 'd755913ed731c335656a9578be648aa0' }
+  let(:user_id) { 'user1' }
 
   it 'should return end user id' do
     PeanutLabs::Credentials.id  = labs_id
