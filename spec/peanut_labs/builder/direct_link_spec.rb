@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PeanutLabs::DirectLink do
+describe PeanutLabs::Builder::DirectLink do
   let(:app_id) { '1000' }
   let(:user_id) { 'user123123' }
   let(:user_go_id) { '41597ceacf' }
@@ -10,7 +10,7 @@ describe PeanutLabs::DirectLink do
     PeanutLabs::Credentials.key = '123123123123123123'
   end
 
-  subject { PeanutLabs::DirectLink }
+  subject { PeanutLabs::Builder::DirectLink }
 
   it 'should add sub_id to link' do
     expect(
