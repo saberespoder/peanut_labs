@@ -1,3 +1,5 @@
+require_relative '../credentials'
+require_relative '../errors'
 require_relative 'user_id'
 
 module PeanutLabs
