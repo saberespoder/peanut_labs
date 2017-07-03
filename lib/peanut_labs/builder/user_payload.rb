@@ -14,6 +14,9 @@ module PeanutLabs
       # because unlike PHP implementation OpenSSL applies them itself
 
       def self.call(payload = {}, init_vector = nil)
+        # @TODO: Make sure that `payload` is a hash
+        # @TODO: Validate avaliability of mandatory attributes
+
         json_payload = payload.to_json
         init_vector  = get_init_vector unless init_vector
 

@@ -1,6 +1,7 @@
 require_relative '../credentials'
 require_relative '../errors'
 require_relative 'user_id'
+require_relative 'user_payload'
 require 'uri'
 
 module PeanutLabs
@@ -9,20 +10,26 @@ module PeanutLabs
       ENDPOINT = "https://dlink.peanutlabs.com/direct_link".freeze
 
       # Parameters:
-      # user_id - the user’s id within system
-      # sub_id  - A secure session id. Will be returned during postback notification.
+      # user_pid – the user’s id within system
+      # payload  – a hash with user data attributes for encryption
+      # sub_id   – a secure session id. Will be returned during postback notification
 
-      def self.call(user_id, sub_id = nil)
-        raise UserIdMissingError if user_id.nil? || user_id.empty?
+      def self.call(user_pid, attrs = {})
+        # @TODO: Be able to pass user language as attribute
+        raise UserIdMissingError if user_pid.nil? || user_pid.empty?
 
-        attributes = {
-          pub_id:  Credentials.id,
-          user_id: Builder::UserId.new(user_id).call
-        }
+        user_id          = Builder::UserId.new(user_pid).call
+        params           = { pub_id: Credentials.id, user_id: user_id }
+        payload, sub_id  = attrs[:payload], attrs[:sub_id]
 
-        attributes[:sub_id] = sub_id if sub_id
+        if payload && payload.any?
+          encryped = Builder::UserPayload.call(payload.merge(user_id: user_id))
+          params[:payload], params[:iv] = encryped[:payload], encryped[:iv]
+        end
 
-        "#{ENDPOINT}/?#{URI.encode_www_form(attributes)}"
+        params[:sub_id] = sub_id if sub_id
+
+        "#{ENDPOINT}/?#{URI.encode_www_form(params)}"
       end
     end
   end
