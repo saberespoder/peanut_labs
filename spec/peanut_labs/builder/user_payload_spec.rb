@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe PeanutLabs::Builder::UserPayload do
+  let(:app_id)      { '0000' }
   let(:app_key)     { 'abcdef0123456789abcdef0123456789' }
   let(:init_vector) { nil } # Serves testing purposes and will not be passed in the real life
   let(:data) do
@@ -21,6 +22,10 @@ describe PeanutLabs::Builder::UserPayload do
         'ch-f' => ['10-1998', '11-1999']
       }
     }
+  end
+  before do
+    PeanutLabs::Credentials.id  = app_id
+    PeanutLabs::Credentials.key = app_key
   end
   subject { PeanutLabs::Builder::UserPayload.call(data, init_vector) }
 

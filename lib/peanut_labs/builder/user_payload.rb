@@ -1,3 +1,4 @@
+require_relative '../credentials'
 require 'openssl'
 require 'base64'
 require 'cgi'
@@ -17,10 +18,9 @@ module PeanutLabs
         init_vector  = get_init_vector unless init_vector
 
         return {
-          # @TODO: Fetch application key from credentials
           iv:      init_vector,
           payload: encrypt_json_payload(json_payload,
-            'abcdef0123456789abcdef0123456789',
+            Credentials.key,
             init_vector
           )
         }
