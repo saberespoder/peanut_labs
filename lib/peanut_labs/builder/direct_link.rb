@@ -1,6 +1,7 @@
 require_relative '../credentials'
 require_relative '../errors'
 require_relative 'user_id'
+require 'uri'
 
 module PeanutLabs
   module Builder
@@ -9,18 +10,19 @@ module PeanutLabs
 
       # Parameters:
       # user_id - the user’s id within system
-      # sub_id - A secure session id. Will be returned during postback notification.
+      # sub_id  - A secure session id. Will be returned during postback notification.
 
-      def self.call(user_id, sub_id=nil)
+      def self.call(user_id, sub_id = nil)
         raise UserIdMissingError if user_id.nil? || user_id.empty?
 
-        result = "#{ENDPOINT}/?pub_id=#{Credentials.id}&user_id=#{Builder::UserId.new(user_id).call}"
+        attributes = {
+          pub_id:  Credentials.id,
+          user_id: Builder::UserId.new(user_id).call
+        }
 
-        if sub_id
-          result << "&sub_id=#{sub_id}"
-        end
+        attributes[:sub_id] = sub_id if sub_id
 
-        result
+        "#{ENDPOINT}/?#{URI.encode_www_form(attributes)}"
       end
     end
   end
