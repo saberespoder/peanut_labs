@@ -13,14 +13,14 @@ module PeanutLabs
       # user_pid – the user’s id within system
       # payload  – a hash with user data attributes for encryption
       # sub_id   – a secure session id. Will be returned during postback notification
+      # zl       – survey interface language (for some reason, PN only translates interface but not questions)
 
       def self.call(user_pid, attrs = {})
-        # @TODO: Be able to pass user language as attribute
         raise UserIdMissingError if user_pid.nil? || user_pid.empty?
 
-        user_id          = Builder::UserId.new(user_pid).call
-        params           = { pub_id: Credentials.id, user_id: user_id }
-        payload, sub_id  = attrs[:payload], attrs[:sub_id]
+        user_id              = Builder::UserId.new(user_pid).call
+        params               = { pub_id: Credentials.id, user_id: user_id }
+        payload, sub_id, zl  = attrs[:payload], attrs[:sub_id], attrs[:zl]
 
         if payload && payload.any?
           encryped = Builder::UserPayload.call(payload.merge(user_id: user_id))
@@ -28,6 +28,7 @@ module PeanutLabs
         end
 
         params[:sub_id] = sub_id if sub_id
+        params[:zl]     = zl if zl
 
         "#{ENDPOINT}/?#{URI.encode_www_form(params)}"
       end

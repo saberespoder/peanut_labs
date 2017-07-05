@@ -24,9 +24,15 @@ describe PeanutLabs::Builder::DirectLink do
     ).to eql 'https://dlink.peanutlabs.com/direct_link/?pub_id=0000&user_id=user1-0000-aa3ad22725&sub_id=random_sub_id'
   end
 
+  it 'should add zl to link' do
+    expect(
+      subject.call(user_id, zl: 'es')
+    ).to eql 'https://dlink.peanutlabs.com/direct_link/?pub_id=0000&user_id=user1-0000-aa3ad22725&zl=es'
+  end
+
   context 'with payload' do
-    it 'has expected attributes' do
-      payload = subject.call(user_id, payload: { sex: 1 }).split('?').last
+    it 'returns expected attributes' do
+      payload = subject.call(user_id, payload: { cc: 'US', sex: 1, dob: '1990-04-10', postal: '94104' }).split('?').last
       keys    = URI.decode_www_form(payload).map { |k, v| k }
 
       expect(keys).to include('pub_id', 'user_id', 'payload', 'iv')
