@@ -15,7 +15,7 @@ module PeanutLabs
       # because unlike PHP implementation OpenSSL applies them itself
 
       def self.call(payload = {}, init_vector = nil)
-        raise PayloadMandatoryError if payload.keys.sort != MANDATORY_ATTRS.sort
+        raise PayloadMandatoryError if (MANDATORY_ATTRS - payload.keys.map(&:to_sym)).any?
 
         json_payload = payload.to_json
         init_vector  = get_init_vector unless init_vector

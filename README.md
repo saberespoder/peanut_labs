@@ -63,10 +63,9 @@ Be a good lad and write specs, we love code we can rely on.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/saberespoder/peanut_labs. 
+Bug reports and pull requests are welcome on GitHub at https://github.com/saberespoder/peanut_labs.
 
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
