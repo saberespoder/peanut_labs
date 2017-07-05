@@ -9,7 +9,7 @@ module PeanutLabs
       # highly recommended not to expose descending id's in here
 
       def initialize(public_user_id)
-        raise PeanutLabs::UserIdAlphanumericError if public_user_id.match(/\A\p{Alnum}+\z/).nil?
+        raise UserIdAlphanumericError if public_user_id.match(/\A\p{Alnum}+\z/).nil?
         @public_user_id = public_user_id
       end
 

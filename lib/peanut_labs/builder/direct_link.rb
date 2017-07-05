@@ -7,7 +7,7 @@ require 'uri'
 module PeanutLabs
   module Builder
     class DirectLink
-      ENDPOINT = "https://dlink.peanutlabs.com/direct_link".freeze
+      ENDPOINT = 'https://dlink.peanutlabs.com/direct_link'.freeze
 
       # Parameters:
       # user_pid – the user’s id within system
@@ -17,6 +17,7 @@ module PeanutLabs
 
       def self.call(user_pid, attrs = {})
         raise UserIdMissingError if user_pid.nil? || user_pid.empty?
+        raise PayloadObjectError if attrs[:payload] && attrs[:payload].class != Hash
 
         user_id              = Builder::UserId.new(user_pid).call
         params               = { pub_id: Credentials.id, user_id: user_id }

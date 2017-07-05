@@ -32,24 +32,32 @@ describe PeanutLabs::Builder::DirectLink do
 
   context 'with payload' do
     it 'returns expected attributes' do
-      payload = subject.call(user_id, payload: { cc: 'US', sex: 1, dob: '1990-04-10', postal: '94104' }).split('?').last
+      payload = subject.call(user_id, payload: { cc: 'US', sex: 1, dob: '1990-04-10' }).split('?').last
       keys    = URI.decode_www_form(payload).map { |k, v| k }
 
       expect(keys).to include('pub_id', 'user_id', 'payload', 'iv')
     end
   end
 
-  context "errors" do
-    it 'if user_id is missing throws error' do
+  context 'throws error' do
+    it 'if user_id is missing' do
       expect { subject.call(nil) }.to raise_error(PeanutLabs::UserIdMissingError)
       expect { subject.call("") }.to raise_error(PeanutLabs::UserIdMissingError)
     end
 
-    it 'if user_id is not alphanumeric throws error' do
+    it 'if user_id is not alphanumeric' do
       expect { subject.call('123~@~abc') }.to raise_error(PeanutLabs::UserIdAlphanumericError)
     end
 
-    it 'should fail with missing Credential' do
+    it 'if payload is not a hash' do
+      expect { subject.call(user_id, payload: :symbol) }.to raise_error(PeanutLabs::PayloadObjectError)
+    end
+
+    it 'if mandatory attributes missed' do
+      expect { subject.call(user_id, payload: { sex: 1 }) }.to raise_error(PeanutLabs::PayloadMandatoryError)
+    end
+
+    it 'if Credential is missing' do
       PeanutLabs::Credentials.id  = nil
       PeanutLabs::Credentials.key = nil
 

@@ -7,15 +7,15 @@ require 'json'
 module PeanutLabs
   module Builder
     class UserPayload
-      ENCRYPTION = 'AES-128-CBC'.freeze
-      BLOCK_SIZE = 16.freeze
+      MANDATORY_ATTRS = %i(user_id cc dob sex).freeze
+      ENCRYPTION      = 'AES-128-CBC'.freeze
+      BLOCK_SIZE      = 16.freeze
 
       # It turns out that we don't have add AES padding inside `encrypt_json_payload`
       # because unlike PHP implementation OpenSSL applies them itself
 
       def self.call(payload = {}, init_vector = nil)
-        # @TODO: Make sure that `payload` is a hash
-        # @TODO: Validate avaliability of mandatory attributes
+        raise PayloadMandatoryError if payload.keys.sort != MANDATORY_ATTRS.sort
 
         json_payload = payload.to_json
         init_vector  = get_init_vector unless init_vector
