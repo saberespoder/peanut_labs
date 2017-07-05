@@ -53,28 +53,25 @@ http://peanut-labs.github.io/publisher-doc/index.html#ipwhitelist
 ### Iframe
 
 ```
-ruby
 PeanutLabs::Builder::IframeUrl.call(id: user.pid)
 ```
 
 *Possible attributes*
-
-id: required, public user ID (highly recommended not to expose descending IDs in here)
-dob: not required, classes accepted - Date, DateTime, Time or formatted "MM-DD-YYYY" string
-sex: not required, 1 for male, 2 for female
+- id: required, public user ID (highly recommended not to expose descending IDs in here)
+- dob: not required, classes accepted - Date, DateTime, Time or formatted "MM-DD-YYYY" string
+- sex: not required, 1 for male, 2 for female
 
 ### Direct Links
 
 ```
-ruby
 PeanutLabs::Builder::DirectLink.call(user.pid, attributes = {})
 ```
 
 *Possible attributes (not required)*
 
-payload: a hash with user data attributes for encryption
-sub_id: a secure session id. Will be returned during postback notification
-zl: survey language (for some reason, PN translates only interface but not questions)
+- payload: a hash with user data attributes for encryption
+- sub_id: a secure session id. Will be returned during postback notification
+- zl: survey language (for some reason, PN translates only interface but not questions)
 
 
 ## Development
