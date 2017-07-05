@@ -13,7 +13,7 @@ module PeanutLabs
       # user_pid – the user’s id within system
       # payload  – a hash with user data attributes for encryption
       # sub_id   – a secure session id. Will be returned during postback notification
-      # zl       – survey interface language (for some reason, PN only translates interface but not questions)
+      # zl       – survey language (for some reason, PN translates only interface but not questions)
 
       def self.call(user_pid, attrs = {})
         raise UserIdMissingError if user_pid.nil? || user_pid.empty?

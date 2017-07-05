@@ -11,8 +11,13 @@ module PeanutLabs
       ENCRYPTION      = 'AES-128-CBC'.freeze
       BLOCK_SIZE      = 16.freeze
 
-      # It turns out that we don't have add AES padding inside `encrypt_json_payload`
-      # because unlike PHP implementation OpenSSL applies them itself
+#
+#     This class is Ruby implementation of encoding algorithm
+#     described in http://peanut-labs.github.io/publisher-doc/#iv-payload
+#
+#     It turns out that we don't have add AES padding inside `encrypt_json_payload`
+#     because unlike PHP implementation OpenSSL applies them itself
+#
 
       def self.call(payload = {}, init_vector = nil)
         raise PayloadMandatoryError if (MANDATORY_ATTRS - payload.keys.map(&:to_sym)).any?
