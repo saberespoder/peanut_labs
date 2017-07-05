@@ -16,7 +16,9 @@ module PeanutLabs
 #     params[:dob] -> not required, classes accepted - Date, DateTime, Time or formatted "MM-DD-YYYY" string
 #     params[:sex] -> not required, 1 for male, 2 for female
 #
+
       def self.call(params)
+        # @TODO: Be able to pass iframe language
         raise PeanutLabs::UserIdMissingError if params[:id].nil? || params[:id].empty?
 
         result = "#{ENDPOINT}?userId=#{UserId.new(params[:id]).call}"

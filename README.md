@@ -29,7 +29,7 @@ Or install it yourself as:
     $ gem install peanut_labs
 
 ## Usage
-You need to provide you app_id and and app_key. 
+You need to provide you app_id and and app_key.
 Perfect place to do that in rails app is config/initialize/peanutlabs.rb file
 
 ```
@@ -51,10 +51,30 @@ Whitelist was taken from official documentation:
 http://peanut-labs.github.io/publisher-doc/index.html#ipwhitelist
 
 ### Iframe
-TODO: Explain here how to build an iframe link
+
+```
+ruby
+PeanutLabs::Builder::IframeUrl.call(id: user.pid)
+```
+
+*Possible attributes*
+
+id: required, public user ID (highly recommended not to expose descending IDs in here)
+dob: not required, classes accepted - Date, DateTime, Time or formatted "MM-DD-YYYY" string
+sex: not required, 1 for male, 2 for female
 
 ### Direct Links
-TODO: Explain how to build direct links
+
+```
+ruby
+PeanutLabs::Builder::DirectLink.call(user.pid, attributes = {})
+```
+
+*Possible attributes (not required)*
+
+payload: a hash with user data attributes for encryption
+sub_id: a secure session id. Will be returned during postback notification
+zl: survey language (for some reason, PN translates only interface but not questions)
 
 
 ## Development
@@ -63,10 +83,9 @@ Be a good lad and write specs, we love code we can rely on.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/saberespoder/peanut_labs. 
+Bug reports and pull requests are welcome on GitHub at https://github.com/saberespoder/peanut_labs.
 
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
