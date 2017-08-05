@@ -88,7 +88,7 @@ module PeanutLabs
               '107.20.152.198'].freeze
 
     def self.matches?(request)
-      !ALLOWED_IPS.include?(request.remote_ip)
+      ALLOWED_IPS.include?(request.remote_ip)
     end
 
   end
