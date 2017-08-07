@@ -1,11 +1,12 @@
 module PeanutLabs
   class Whitelist
     # This should be used in rails routes.rb file, like this:
+    # IPs list is equal to the list from http://peanut-labs.github.io/publisher-doc/#ipwhitelist
     #
     # post "callback/peanutlabs" => "callback#peanutlabs", constraints: PeanutLabs::Whitelist
     #
 
-    RN_IPS = ['75.101.154.153',
+    ALLOWED_IPS = ['75.101.154.153',
               '54.243.235.176',
               '54.243.210.15',
               '54.243.204.6',
@@ -87,7 +88,7 @@ module PeanutLabs
               '107.20.152.198'].freeze
 
     def self.matches?(request)
-      !RN_IPS.include?(request.remote_ip)
+      ALLOWED_IPS.include?(request.remote_ip)
     end
 
   end

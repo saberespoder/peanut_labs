@@ -7,10 +7,10 @@ describe PeanutLabs::Whitelist do
   subject { PeanutLabs::Whitelist }
 
   it "doesn't block whitelisted ips" do
-    expect(subject.matches?(Request.new('107.22.162.83'))).to be_falsy
+    expect(subject.matches?(Request.new('107.22.162.83'))).to be_truthy
   end
 
   it "blocks non-whitelisted ips" do
-    expect(subject.matches?(Request.new('127.0.0.1'))).to be_truthy
+    expect(subject.matches?(Request.new('127.0.0.1'))).to be_falsy
   end
 end
