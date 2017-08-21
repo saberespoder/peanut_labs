@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe PeanutLabs::Builder::UserPayload do
-  let(:app_id)      { '0000' }
-  let(:app_key)     { 'abcdef0123456789abcdef0123456789' }
+  let(:app_id)      { '9191' }
+  let(:app_key)     { '30ff84086b72b4923c402a352477fcce' }
   let(:init_vector) { nil } # Serves testing purposes and will not be passed in the real life
   let(:data) do
     {
-      'user_id' => 'user001-1001-2389d74882',
+      'user_id' => 'c6d8fc67b58f455986849c700c0a8f1b-9191-ef72be15f5',
       'cc'      => 'US',
       'sex'     => 1,
       'dob'     => '1990-04-10',
@@ -40,21 +40,21 @@ describe PeanutLabs::Builder::UserPayload do
       expect(first_call[:iv]).not_to eq(second_call[:iv])
     end
     it 'has expected length' do
-      expect(CGI.unescape(subject[:iv]).length).to eq 24
+      expect(subject[:iv].length).to eq 24
     end
   end
 
   context 'payload' do
     context 'with defined vector' do
-      let(:init_vector) { 'LB4Fs5awRnFYoLm%2BMTcANg%3D%3D' }
+      let(:init_vector) { 'LB4Fs5awRnFYoLm+MTcANg==' }
       it 'returns expected value' do
-        expect(subject[:payload]).to eq 'aVJyjog7mQrtUMUDZONYOAlSqBRa1%2BoMIhZhH6Qahs8hvWSflN7s7Z98fR8QyeqfdQ8blnp5x3B3IbuwwNQBORTfXRJ0lKWytvXa%2BUK%2FUCYOFPSvasgGIKVtolrHy7n6vJujtbpC3IKJxnWRbOtKV5Q5xw9Vz6hgzvhf%2FwNV3m9N0qkMxFon%2FNEu933mbQOEjgwswjWHjFGQ5%2BugTzCT5PX47nDnV8vXR014KCZcjGw8DtkGog5A%2B%2B4SdBbEOP0M9g165ZQ5nsFtyjy8960bRGef7UNey4hmoFiFvqlws%2BAhs7YAT%2Fb7c97K6amSCZm9TocPG4tJAqZYgoHTCApFgIuGbvfnlt%2B0%2FPSehNluyl8%3D'
+        expect(subject[:payload]).to eq 'TFCf/rT3iNqGXmAYRkwyXmVO14LXg7R2c0B4UFslXacbIzxtbltCN5Ww4b88eMiNWAoHWgCYddTRsxepEO3/5hpKc+11z8YAPeiT45CVUtfqCsdAwRp01n5w6z4V9zp307R+icwhT5dzc+Bj7lMxlkWAZI2MBxlAB4weBxFoQTggzWeyhc1z4sCpLgajyfB3jRsEtKsyQQKT5jk4qJ4b8jG90Oc+SCcYXAbk40s2o2Tsq1sNnmfYQk/f5DNPJ2JKib5hcVfq1woCBySWrJRf3GQjEba8rR3Ca/4ZSfXKZUClFrkzxfBa75hyzyxUeLI2x/X4R3+vvdqZuSMZMVa6ZDUyfwgj0YIao+un/a9G8gGWwRby4TJdNJKMnWbQ2mv3a9qf5FejyoPQVd4aYJwlbg=='
       end
     end
 
     context 'with random vector' do
-      let(:iv)      { Base64.strict_decode64(CGI.unescape(subject[:iv])) }
-      let(:payload) { Base64.strict_decode64(CGI.unescape(subject[:payload])) }
+      let(:iv)      { Base64.strict_decode64(subject[:iv]) }
+      let(:payload) { Base64.strict_decode64(subject[:payload]) }
 
       it 'can be decrypted' do
         decipher          = OpenSSL::Cipher.new('AES-128-CBC').decrypt

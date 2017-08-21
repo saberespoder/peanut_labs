@@ -38,7 +38,7 @@ module PeanutLabs
 
       def self.get_init_vector
         cipher = OpenSSL::Cipher.new(ENCRYPTION).encrypt
-        CGI.escape(Base64.strict_encode64(cipher.random_iv))
+        Base64.strict_encode64(cipher.random_iv)
       end
 
       def self.encrypt_json_payload(payload, application_key, iv)
@@ -47,12 +47,12 @@ module PeanutLabs
         # Encrypt payload
         encrypted_payload = encryptor(payload, binary_key, iv)
 
-        CGI.escape(Base64.strict_encode64(encrypted_payload))
+        Base64.strict_encode64(encrypted_payload)
       end
 
       def self.encryptor(payload, key, iv)
         cipher     = OpenSSL::Cipher.new(ENCRYPTION).encrypt
-        cipher.iv  = Base64.strict_decode64(CGI.unescape(iv))
+        cipher.iv  = Base64.strict_decode64(iv)
         cipher.key = key
 
         cipher.update(payload) + cipher.final
