@@ -30,6 +30,12 @@ describe PeanutLabs::Builder::DirectLink do
     ).to eql 'https://dlink.peanutlabs.com/direct_link/?pub_id=0000&user_id=user1-0000-aa3ad22725&zl=es'
   end
 
+  it 'should add touchcode to link' do
+    expect(
+      subject.call(user_id, touchcode: 'ABCDEFG12349')
+    ).to eql 'https://dlink.peanutlabs.com/direct_link/?pub_id=0000&user_id=user1-0000-aa3ad22725&touchcode=ABCDEFG12349'
+  end
+
   context 'with payload' do
     it 'returns expected attributes' do
       payload = subject.call(user_id, payload: { cc: 'US', sex: 1, dob: '1990-04-10' }).split('?').last
