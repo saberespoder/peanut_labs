@@ -85,7 +85,9 @@ module PeanutLabs
               '107.20.246.140',
               '107.20.235.89',
               '107.20.201.76',
-              '107.20.152.198'].freeze
+              '107.20.152.198',
+              '63.241.211.253',
+              '63.241.211.254'].freeze
 
     def self.matches?(request)
       ALLOWED_IPS.include?(request.remote_ip)
